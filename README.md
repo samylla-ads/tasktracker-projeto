@@ -1,6 +1,6 @@
 # TaskTracker
 
-Gerenciador de tarefas via linha de comando (CLI), desenvolvido em Python 3 como parte do **Bootcamp II — Fase 2 (Entrega Intermediária)** do curso de Análise e Desenvolvimento de Sistemas (UniCEUB).
+Gerenciador de tarefas via linha de comando (CLI), desenvolvido em Python 3 como parte do **Bootcamp II - Fase 2 (Entrega Intermediária)** do curso de Análise e Desenvolvimento de Sistemas (UniCEUB).
 
 ## Descrição
 
