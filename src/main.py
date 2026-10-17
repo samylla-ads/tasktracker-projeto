@@ -2,16 +2,73 @@
 TaskTracker - Gerenciador de Tarefas via Linha de Comando (CLI)
 
 Bootcamp II - Fase 2 (Entrega Intermediaria)
-Versao inicial: menu e loop principal (validacoes no proximo commit).
+Implementacao em Python 3 da receita logica definida na Fase 1.
 """
 
+# ---------------------------------------------------------------
+# Constantes e regras de negocio
+# ---------------------------------------------------------------
+
+# Prioridades aceitas (chave = o que o usuario digita; valor = como e salvo)
+PRIORIDADES_VALIDAS = {
+    "alta": "Alta",
+    "média": "Média",
+    "media": "Média",
+    "baixa": "Baixa",
+}
+
+# Ordem usada na listagem: Alta -> Média -> Baixa
+ORDEM_PRIORIDADE = {"Alta": 1, "Média": 2, "Baixa": 3}
+
+STATUS_INICIAL = "Pendente"
+
+
+# ---------------------------------------------------------------
+# Funcoes de validacao de entrada
+# ---------------------------------------------------------------
+
+def ler_titulo():
+    """Pede o titulo ate que um valor nao vazio seja informado."""
+    while True:
+        titulo = input("Título da tarefa: ").strip()
+        if titulo:
+            return titulo
+        print("[ERRO] O título é obrigatório e não pode ficar vazio. Tente novamente.\n")
+
+
+def ler_prioridade():
+    """Pede a prioridade ate que seja Alta, Média (ou Media) ou Baixa."""
+    while True:
+        entrada = input("Prioridade (Alta / Média / Baixa): ").strip().lower()
+        if entrada in PRIORIDADES_VALIDAS:
+            return PRIORIDADES_VALIDAS[entrada]
+        print("[ERRO] Prioridade inválida. Digite apenas Alta, Média ou Baixa.\n")
+
+
+def ler_descricao():
+    """Descricao e livre; se ficar em branco, registra um texto padrao."""
+    descricao = input("Descrição (opcional): ").strip()
+    return descricao if descricao else "Sem descrição"
+
+
+def ler_data_limite():
+    """Data limite em formato livre (sugestao: DD/MM/AAAA)."""
+    data = input("Data limite (DD/MM/AAAA): ").strip()
+    return data if data else "Não informada"
+
+
+# ---------------------------------------------------------------
+# Funcionalidades do sistema
+# ---------------------------------------------------------------
 
 def cadastrar_tarefa(tarefas):
+    """Coleta e valida os dados, cria a tarefa e a adiciona na lista."""
     print("\n--- CADASTRAR NOVA TAREFA ---")
-    titulo = input("Título da tarefa: ").strip()
-    descricao = input("Descrição (opcional): ").strip()
-    prioridade = input("Prioridade (Alta / Média / Baixa): ").strip()
-    data_limite = input("Data limite (DD/MM/AAAA): ").strip()
+
+    titulo = ler_titulo()
+    descricao = ler_descricao()
+    prioridade = ler_prioridade()
+    data_limite = ler_data_limite()
 
     tarefa = {
         "id": len(tarefas) + 1,
@@ -19,23 +76,38 @@ def cadastrar_tarefa(tarefas):
         "descricao": descricao,
         "prioridade": prioridade,
         "data_limite": data_limite,
-        "status": "Pendente",
+        "status": STATUS_INICIAL,  # definido automaticamente
     }
+
     tarefas.append(tarefa)
-    print(f"\n[OK] Tarefa \"{titulo}\" cadastrada com sucesso!")
+    print(f"\n[OK] Tarefa \"{titulo}\" cadastrada com sucesso! (ID {tarefa['id']})")
 
 
 def listar_tarefas(tarefas):
+    """Exibe as tarefas organizadas por prioridade ou avisa se a lista esta vazia."""
     print("\n--- TAREFAS CADASTRADAS ---")
+
     if not tarefas:
         print("Nenhuma tarefa cadastrada no momento.")
         return
-    for tarefa in tarefas:
-        print("-" * 40)
-        for campo, valor in tarefa.items():
-            print(f"{campo}: {valor}")
-    print("-" * 40)
 
+    ordenadas = sorted(tarefas, key=lambda t: ORDEM_PRIORIDADE[t["prioridade"]])
+
+    for tarefa in ordenadas:
+        print("-" * 40)
+        print(f"ID:          {tarefa['id']}")
+        print(f"Título:      {tarefa['titulo']}")
+        print(f"Descrição:   {tarefa['descricao']}")
+        print(f"Prioridade:  {tarefa['prioridade']}")
+        print(f"Data limite: {tarefa['data_limite']}")
+        print(f"Status:      {tarefa['status']}")
+    print("-" * 40)
+    print(f"Total de tarefas: {len(tarefas)}")
+
+
+# ---------------------------------------------------------------
+# Menu e loop principal
+# ---------------------------------------------------------------
 
 def exibir_menu():
     print("\n========== TASKTRACKER ==========")
@@ -46,10 +118,12 @@ def exibir_menu():
 
 
 def main():
-    tarefas = []
+    tarefas = []  # lista de tarefas mantida em memoria
+
     while True:
         exibir_menu()
         opcao = input("Escolha uma opção: ").strip()
+
         if opcao == "1":
             cadastrar_tarefa(tarefas)
         elif opcao == "2":
@@ -62,4 +136,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except (KeyboardInterrupt, EOFError):
+        print("\n\nAplicação encerrada pelo usuário.")
