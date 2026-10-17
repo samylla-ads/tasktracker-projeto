@@ -5,9 +5,7 @@ Bootcamp II - Fase 2 (Entrega Intermediaria)
 Implementacao em Python 3 da receita logica definida na Fase 1.
 """
 
-# ---------------------------------------------------------------
 # Constantes e regras de negocio
-# ---------------------------------------------------------------
 
 # Prioridades aceitas (chave = o que o usuario digita; valor = como e salvo)
 PRIORIDADES_VALIDAS = {
@@ -23,12 +21,9 @@ ORDEM_PRIORIDADE = {"Alta": 1, "Média": 2, "Baixa": 3}
 STATUS_INICIAL = "Pendente"
 
 
-# ---------------------------------------------------------------
 # Funcoes de validacao de entrada
-# ---------------------------------------------------------------
 
 def ler_titulo():
-    """Pede o titulo ate que um valor nao vazio seja informado."""
     while True:
         titulo = input("Título da tarefa: ").strip()
         if titulo:
@@ -37,7 +32,6 @@ def ler_titulo():
 
 
 def ler_prioridade():
-    """Pede a prioridade ate que seja Alta, Média (ou Media) ou Baixa."""
     while True:
         entrada = input("Prioridade (Alta / Média / Baixa): ").strip().lower()
         if entrada in PRIORIDADES_VALIDAS:
@@ -46,24 +40,20 @@ def ler_prioridade():
 
 
 def ler_descricao():
-    """Descricao e livre; se ficar em branco, registra um texto padrao."""
     descricao = input("Descrição (opcional): ").strip()
     return descricao if descricao else "Sem descrição"
 
 
 def ler_data_limite():
-    """Data limite em formato livre (sugestao: DD/MM/AAAA)."""
     data = input("Data limite (DD/MM/AAAA): ").strip()
     return data if data else "Não informada"
 
 
-# ---------------------------------------------------------------
 # Funcionalidades do sistema
-# ---------------------------------------------------------------
+
 
 def cadastrar_tarefa(tarefas):
-    """Coleta e valida os dados, cria a tarefa e a adiciona na lista."""
-    print("\n--- CADASTRAR NOVA TAREFA ---")
+    print("\n- CADASTRAR NOVA TAREFA -")
 
     titulo = ler_titulo()
     descricao = ler_descricao()
@@ -84,8 +74,7 @@ def cadastrar_tarefa(tarefas):
 
 
 def listar_tarefas(tarefas):
-    """Exibe as tarefas organizadas por prioridade ou avisa se a lista esta vazia."""
-    print("\n--- TAREFAS CADASTRADAS ---")
+    print("\n- TAREFAS CADASTRADAS -")
 
     if not tarefas:
         print("Nenhuma tarefa cadastrada no momento.")
@@ -105,16 +94,14 @@ def listar_tarefas(tarefas):
     print(f"Total de tarefas: {len(tarefas)}")
 
 
-# ---------------------------------------------------------------
 # Menu e loop principal
-# ---------------------------------------------------------------
 
 def exibir_menu():
-    print("\n========== TASKTRACKER ==========")
+    print("\n TASKTRACKER ")
     print("1. Cadastrar nova tarefa")
     print("2. Visualizar tarefas cadastradas")
     print("3. Sair da aplicação")
-    print("=================================")
+    print("==XXXXXXXXX==")
 
 
 def main():
