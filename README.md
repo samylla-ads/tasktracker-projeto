@@ -1,10 +1,16 @@
 # TaskTracker
 
-Gerenciador de tarefas via linha de comando (CLI), desenvolvido em Python 3 como parte do **Bootcamp II - Fase 2 (Entrega Intermediária)** do curso de Análise e Desenvolvimento de Sistemas (UniCEUB).
+Gerenciador de tarefas via linha de comando (CLI), desenvolvido em Python 3 e empacotado com Docker como parte do **Bootcamp II** do curso de Análise e Desenvolvimento de Sistemas (UniCEUB).
 
 ## Descrição
 
-O TaskTracker ajuda o usuário a organizar suas tarefas diárias, permitindo cadastrar tarefas com prioridade e data limite e visualizá-las de forma organizada no terminal. Esta versão implementa a receita lógica planejada na Fase 1 (disponível em `docs/planejamento_logico.pdf`).
+O TaskTracker ajuda o usuário a organizar suas tarefas diárias, permitindo cadastrar tarefas com prioridade e data limite e visualizá-las de forma organizada no terminal. O projeto foi construído em três fases:
+
+| Fase | Entrega |
+|---|---|
+| 1 | Planejamento lógico (`docs/planejamento_logico.pdf`) |
+| 2 | Implementação em Python e versionamento com Git/GitHub (`src/main.py`) |
+| 3 | Conteinerização e orquestração com Docker (`Dockerfile` e `docker-compose.yml`) |
 
 ## Funcionalidades
 
@@ -26,38 +32,64 @@ Se não houver tarefas cadastradas, a listagem informa que não existem registro
 
 ## Tecnologias
 
-- Python 3 (sem bibliotecas externas)
+- Python 3.11 (sem bibliotecas externas)
+- Docker e Docker Compose
 - Git e GitHub para versionamento
 
 ## Estrutura do projeto
 
 ```
 tasktracker-projeto/
-├── README.md
 ├── .gitignore
 ├── docs/
 │   └── planejamento_logico.pdf
-└── src/
-    └── main.py
+├── src/
+│   └── main.py
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
 ```
 
-## Instalação e execução
+## Execução com Docker
 
-1. Tenha o **Python 3** instalado (`python --version` ou `python3 --version`).
-2. Clone o repositório:
+Pré-requisito: ter o **Docker** instalado (Docker Desktop no Windows/macOS ou Docker Engine no Linux).
+
+Clone o repositório e entre na pasta:
+
 ```bash
-   git clone https://github.com/samylla-ads/tasktracker-projeto.git
-   cd tasktracker-projeto
+git clone https://github.com/samylla-ads/tasktracker-projeto.git
+cd tasktracker-projeto
 ```
-3. Execute a aplicação:
+
+### 1. Como construir a imagem
+
 ```bash
-   python src/main.py
+docker build -t tasktracker-app .
 ```
-   (no Linux/macOS, use `python3 src/main.py`)
 
-## Próximos passos (Fase 3)
+### 2. Como rodar o container em modo isolado
 
-Empacotamento da aplicação, containerização com Docker, testes e deploy.
+```bash
+docker run -it --rm tasktracker-app
+```
+
+O parâmetro `-it` abre o modo interativo com terminal, necessário para usar o menu. O `--rm` remove o container ao sair.
+
+### 3. Como rodar via orquestração (recomendado)
+
+```bash
+docker compose run --rm tasktracker
+```
+
+O `docker-compose.yml` já define `stdin_open: true` e `tty: true`, que mantêm o teclado e o terminal conectados ao container. Se a imagem ainda não existir, ela é construída automaticamente.
+
+## Execução sem Docker (opcional)
+
+Com o Python 3 instalado:
+
+```bash
+python src/main.py
+```
 
 ## Autora
 
