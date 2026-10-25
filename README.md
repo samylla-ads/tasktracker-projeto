@@ -76,7 +76,6 @@ docker run -it --rm tasktracker-app
 O parâmetro `-it` abre o modo interativo com terminal, necessário para usar o menu. O `--rm` remove o container ao sair.
 
 ### 3. Como rodar via orquestração (recomendado)
-
 ```bash
 docker compose run --rm tasktracker
 ```

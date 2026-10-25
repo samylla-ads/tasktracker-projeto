@@ -71,6 +71,7 @@ def cadastrar_tarefa(tarefas):
 
     tarefas.append(tarefa)
     print(f"\n[OK] Tarefa \"{titulo}\" cadastrada com sucesso! (ID {tarefa['id']})")
+    print(f"Status: {tarefa['status']} (definido automaticamente)")
 
 
 def listar_tarefas(tarefas):
@@ -97,11 +98,13 @@ def listar_tarefas(tarefas):
 # Menu e loop principal
 
 def exibir_menu():
-    print("\n TASKTRACKER ")
+    print("\n" + "=" * 34)
+    print("           TASKTRACKER")
+    print("=" * 34)
     print("1. Cadastrar nova tarefa")
     print("2. Visualizar tarefas cadastradas")
     print("3. Sair da aplicação")
-    print("==XXXXXXXXX==")
+    print("=" * 34)
 
 
 def main():
